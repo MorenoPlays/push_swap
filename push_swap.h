@@ -12,8 +12,9 @@
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include "libft/libft.h"
 # include <limits.h>
+#include<stdlib.h>
+#include<stdio.h>
 typedef struct lista
 {
 	int	valor;

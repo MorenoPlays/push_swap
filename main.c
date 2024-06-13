@@ -36,32 +36,87 @@ void	sorte(pilha **a, pilha **b, int index)
 	pilha *aux1;
 	int	posicao;
 	int	posicao1;
+	int menor;
 
 	aux=*a;
 	aux1=*b;
 	posicao=1;
 	posicao1=1;
-	while(posicao<index && aux->proximo)
+	menor=menor_valor(aux);
+	while(aux )
 	{
-		
-		vrra(menor_valor(aux,index),index,&*a);
-		if(aux->valor > aux->proximo->valor && posicao==1)
+		printf("atual: %d \n", aux->valor);
+		if(aux->proximo)
 		{
-			sa(&*a);
-		}
-		else if (aux->valor > aux->proximo->valor && posicao != 1)
-		{
-			pa(&*a, &*b);
-			posicao=1;
-			aux=*a;
-			aux1=*b;
+		    vrra(menor,index,&*a);
+			if(aux->valor > aux->proximo->valor && posicao==1)
+			{
+				sa(&*a);
+				aux=*a;
+			}
+			else if(aux->valor > aux->proximo->valor && posicao!=1)
+			{
+				pa(&*a,&*b);
+				aux=*a;
+				aux1=*b;
+				index--;
+				posicao=1;
+			}
+			else
+			{
+					aux=aux->proximo;
+					posicao++;
+			}
+			
+			
 		}
 		else
 		{
-			posicao++;
 			aux=aux->proximo;
 		}
+		
+		if(aux1)
+		{
+			if(aux1->proximo)
+			{
+				if(aux1->valor < aux1->proximo->valor && posicao1==1)
+				{
+					sb(&*b);
+					aux1=*b;
+				}
+				else if(aux1->valor < aux1->proximo->valor && posicao1 !=1)
+				{
+					pb(&*a,&*b);
+					aux=*a;
+					aux1=*b;
+					posicao1=1;
+					posicao=1;
+				}
+				else
+				{
+					aux1=aux1->proximo;
+					posicao1++;
+				}
+			}
+			/*
+			else if(aux1->valor > aux1->proximo->valor && posicao!=1)
+			{
+				pb(&*a,&*b);
+				aux=*a;
+				aux1=*b;
+				posicao1=1;
+				posicao=1;
+			}
+			else
+			{
+				aux1=aux1->proximo;
+				posicao1++;
+			}*/
+		}
+		
 	}
+	
+
 }
 
 void	push_swap(pilha **a, pilha **b, int index)
@@ -75,7 +130,7 @@ int main(int argc, char *argv[])
 	pilha	*b;
 	int index;
 	index=0;
-	if(argc >= 1)
+	if(argc > 1)
 	{
 		int	i;
 		int	valor;
@@ -92,4 +147,5 @@ int main(int argc, char *argv[])
 	push_swap(&a,&b,index);
 	printList_a(a);
 	printList_b(b);
+	return (0);
 }

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
 
 void	inserir_inicio(pilha **lista, int valor)
@@ -87,19 +86,22 @@ int maior_valor(pilha *head)
 
 void vrra(int min_valor,int index, pilha **a)
 {
-	pilha *aux;
-	int posicao;
-	aux=*a;
+	if(index > 2)
+	{
+		pilha *aux;
+		int posicao;
+		aux=*a;
 	
 	
-	posicao=1;
-	while (aux != NULL) {
+		posicao=1;
+		while (aux != NULL) {
         if (aux->valor == min_valor) {
 			break ;
         }
         posicao++;
 		aux = aux->proximo;
-    }
-	if(posicao ==index)
+    	}
+		if(posicao ==index)
 		rra(&*a);
+	}
 }

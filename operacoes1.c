@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft/libft.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 void sa(pilha **a)
 {
