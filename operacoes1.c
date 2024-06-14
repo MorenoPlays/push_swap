@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sa_sb_ss.c                                         :+:      :+:    :+:   */
+/*   operacoes1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eda-mata <eda-mata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:40:24 by eda-mata          #+#    #+#             */
-/*   Updated: 2024/06/11 13:34:33 by eda-mata         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:48:05 by eda-mata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void sa(pilha **a)
 	aux = *a;
 	if(aux && aux->proximo)
 	{
-		num = aux->valor;
-		aux->valor=aux->proximo->valor;
-		aux->proximo->valor=num;
+		if (aux->valor > aux->proximo->valor)
+		{
+			num = aux->valor;
+			aux->valor=aux->proximo->valor;
+			aux->proximo->valor=num;
+		}
 	}
 	
 }
@@ -69,7 +72,7 @@ void	pb(pilha **a, pilha **b)
 	pilha *aux;
 	int	num;
 	aux = *b;
-	if(aux && aux->proximo)
+	if(aux)
 	{
 		num = aux->valor;
 		inserir_inicio(&*a, num);

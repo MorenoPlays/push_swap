@@ -6,7 +6,7 @@
 /*   By: eda-mata <eda-mata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 13:39:07 by eda-mata          #+#    #+#             */
-/*   Updated: 2024/06/12 10:26:00 by eda-mata         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:11:02 by eda-mata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int maior_valor(pilha *head)
     return max;
 }
 
-void vrra(int min_valor,int index, pilha **a)
+void	vrra(int min_valor,int index, pilha **a)
 {
 	if(index > 2)
 	{
@@ -102,6 +102,6 @@ void vrra(int min_valor,int index, pilha **a)
 		aux = aux->proximo;
     	}
 		if(posicao ==index)
-		rra(&*a);
+			rra(&*a);
 	}
 }
