@@ -6,7 +6,7 @@
 /*   By: eda-mata <eda-mata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:31 by eda-mata          #+#    #+#             */
-/*   Updated: 2024/06/14 19:12:30 by eda-mata         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:51:12 by eda-mata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void	sorte(pilha **a, pilha **b, int index)
 	posicao=1;
 	posicao1=1;
 	menor=menor_valor(aux);
+	printf("%d\n", menor);
 	while(aux)
 	{
 		if(aux->proximo)
 		{
+			vrra(menor,index,&*a);
 			if(aux->valor > aux->proximo->valor && posicao==1)
 			{
 				sa(&*a);
@@ -82,14 +84,14 @@ void	sorte(pilha **a, pilha **b, int index)
 					sb(&*b);
 					aux1=*b;
 				}
-				else if(aux1->valor > aux1->proximo->valor)
+				/*else if(aux1->valor > aux1->proximo->valor)
 				{
 					pb(&*a,&*b);
 					aux=*a;
 					aux1=*b;
 					posicao1=1;
 					posicao=1;
-				}
+				}*/
 				else
 				{
 					aux1=aux1->proximo;
@@ -98,8 +100,8 @@ void	sorte(pilha **a, pilha **b, int index)
 			}
 		}
 	}
-	pb(&*a,&*b);
-	sa(&*a);
+	/*pb(&*a,&*b);
+	sa(&*a);*/
 
 }
 
