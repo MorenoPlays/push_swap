@@ -21,6 +21,7 @@ void printList_a(pilha* head) {
     }
     printf("NULL\n");
 }
+
 void printList_b(pilha* head) {
     pilha* temp = head;
     while (temp != NULL) {
@@ -30,6 +31,102 @@ void printList_b(pilha* head) {
     printf("NULL\n");
 }
 
+int	ordenado(pilha **a){
+	pilha *aux;
+	aux=*a;
+	while(aux)
+	{
+		if(aux->proximo)
+		{
+			if(aux->valor < aux->proximo->valor)
+			{
+				aux=aux->proximo;
+			}
+			else
+			{
+				return (0);
+			}
+		}
+		else
+			aux=aux->proximo;
+		
+	}
+	return (1);
+}
+
+int	ordenar_a(pilha **a, pilha **b)
+{
+	pilha *aux;
+	int	posicao;
+	int index;
+	
+	aux=*a;
+	posicao=1;
+	index=0;
+	while(aux)
+	{
+		if(aux->proximo)
+		{
+			if(aux->valor > aux->proximo->valor && posicao==1)
+			{
+				sa(&*a);
+				aux=*a;
+			}
+			else if(aux->valor > aux->proximo->valor && posicao!=1)
+			{
+				pa(&*a,&*b);
+				aux=*a;
+				posicao=1;
+				index++;
+			}
+			else
+			{
+				aux=aux->proximo;
+				posicao++;
+			}
+		}
+		else
+			aux=aux->proximo;
+	}
+	return (index);
+}
+
+int	ordenar_b(pilha **a, pilha **b)
+{
+	pilha *aux;
+	int	posicao;
+	int index;
+	
+	aux=*b;
+	posicao=1;
+	index=0;
+	while(aux)
+	{
+		if(aux->proximo)
+		{
+			if(aux->valor < aux->proximo->valor && posicao==1)
+			{
+				sb(&*b);
+				aux=*b;
+			}
+			else if(aux->valor > aux->proximo->valor)
+			{
+				pb(&*a,&*b);
+				aux=*b;
+				posicao=1;
+				index++;
+			}
+			else
+			{
+				aux=aux->proximo;
+				posicao++;
+			}
+		}
+		else
+			aux=aux->proximo;
+	}
+	return (index);
+}
 void	sorte(pilha **a, pilha **b, int index)
 {
 	pilha *aux;
@@ -43,66 +140,17 @@ void	sorte(pilha **a, pilha **b, int index)
 	posicao=1;
 	posicao1=1;
 	menor=menor_valor(aux);
-	printf("%d\n", menor);
-	while(aux)
+	while(ordenado(&*a)==0)
 	{
-		if(aux->proximo)
-		{
-			vrra(menor,index,&*a);
-			if(aux->valor > aux->proximo->valor && posicao==1)
-			{
-				sa(&*a);
-				aux=*a;
-			}
-			else if(aux->valor > aux->proximo->valor && posicao!=1)
-			{
-				pa(&*a,&*b);
-				aux=*a;
-				aux1=*b;
-				index--;
-				posicao=1;
-			}
-			else
-			{
-					aux=aux->proximo;
-					posicao++;
-			}
-			
-			
-		}
-		else
-		{
-			aux=aux->proximo;
-		}
-		
-		if(aux1)
-		{
-			if(aux1->proximo)
-			{
-				if(aux1->valor < aux1->proximo->valor && posicao1==1)
-				{
-					sb(&*b);
-					aux1=*b;
-				}
-				/*else if(aux1->valor > aux1->proximo->valor)
-				{
-					pb(&*a,&*b);
-					aux=*a;
-					aux1=*b;
-					posicao1=1;
-					posicao=1;
-				}*/
-				else
-				{
-					aux1=aux1->proximo;
-					posicao1++;
-				}
-			}
-		}
+		printList_a(*a);
+		printList_b(*b);
+	
+		vrra(menor,index,&*a);
+		index-=ordenar_a(&*a,&*b);
+		index+=ordenar_b(&*a,&*b);
 	}
-	/*pb(&*a,&*b);
-	sa(&*a);*/
-
+	pb(&*a,&*b);
+	sa(&*a);
 }
 
 void	push_swap(pilha **a, pilha **b, int index)
@@ -129,9 +177,13 @@ int main(int argc, char *argv[])
 			index+=inserir_no_fim(&a, valor);
 			i++;
 		}
+		push_swap(&a,&b,index);
+		printList_a(a);
+		printList_b(b);
 	}
-	push_swap(&a,&b,index);
-	printList_a(a);
-	printList_b(b);
+	else
+	{
+		printf("sem argumentos\n");
+	}
 	return (0);
 }
