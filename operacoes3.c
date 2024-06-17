@@ -22,31 +22,33 @@ void	rra(pilha **a)
 	if(aux->proximo)
 	{
 		while(aux->proximo)
-        {
+        	{
 			anterior=aux;
-            aux=aux->proximo;
-        }
+            		aux=aux->proximo;
+        	}
         num = aux->valor;
-		inserir_inicio(&*a, num);
+	inserir_inicio(&*a, num);
         anterior->proximo=NULL;
+        write(1, "rra\n", 4);
 	}
 }
 
 void	rrb(pilha **b)
 {
 	pilha *aux;
-	int	num;
-	aux=*b;
-	if(aux)
+	int		num;
+
+	aux = *b;
+	if (aux)
 	{
 		while(aux->proximo->proximo)
-        {
-            aux=aux->proximo;
-        }
+        	{
+            		aux=aux->proximo;
+        	}
         num = aux->proximo->valor;
-		inserir_inicio(&*b, num);
+	inserir_inicio(&*b, num);
         aux->proximo = NULL;
-		
+        write(1, "rrb\n", 3);
 	}
 }
 

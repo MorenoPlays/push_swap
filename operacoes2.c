@@ -23,6 +23,7 @@ void	ra(pilha **a)
 		inserir_no_fim(&*a, num);
 		aux=aux->proximo;
 		(*a)=aux;
+		write(1, "ra\n", 3);
 	}
 }
 
@@ -37,6 +38,7 @@ void	rb(pilha **b)
 		inserir_no_fim(&*b, num);
 		aux=aux->proximo;
 		(*b)=aux;
+		write(1, "rb\n", 3);
 	}
 }
 

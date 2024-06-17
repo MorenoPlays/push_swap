@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 void sa(pilha **a)
 {
@@ -26,6 +24,7 @@ void sa(pilha **a)
 			num = aux->valor;
 			aux->valor=aux->proximo->valor;
 			aux->proximo->valor=num;
+			write(1, "sa\n", 3);
 		}
 	}
 	
@@ -41,6 +40,7 @@ void sb(pilha **b)
 		num = aux->valor;
 		aux->valor=aux->proximo->valor;
 		aux->proximo->valor=num;
+		write(1, "sb\n", 3);
 	}
 	
 }
@@ -51,7 +51,7 @@ void ss(pilha *a, pilha *b)
     sb(&b);
 }
 
-void	pa(pilha **a, pilha **b)
+void	pb(pilha **a, pilha **b)
 {
 	pilha *aux;
 	int	num;
@@ -62,12 +62,13 @@ void	pa(pilha **a, pilha **b)
 		inserir_inicio(&*b, num);
 		aux = aux->proximo;
 		(*a) = aux;
+		write(1, "pb\n", 3);
 	}
 	
 	
 }
 
-void	pb(pilha **a, pilha **b)
+void	pa(pilha **a, pilha **b)
 {
 	pilha *aux;
 	int	num;
@@ -78,6 +79,7 @@ void	pb(pilha **a, pilha **b)
 		inserir_inicio(&*a, num);
 		aux = aux->proximo;
 		(*b) = aux;
+		write(1, "pa\n", 3);
 	}
 	
 	

@@ -11,28 +11,11 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <limits.h>
 
-void printList_a(pilha* head) {
-    pilha* temp = head;
-    while (temp != NULL) {
-        printf("a:%d ->", temp->valor);
-        temp = temp->proximo;
-    }
-    printf("NULL\n");
-}
-
-void printList_b(pilha* head) {
-    pilha* temp = head;
-    while (temp != NULL) {
-        printf("b:%d -> ", temp->valor);
-        temp = temp->proximo;
-    }
-    printf("NULL\n");
-}
-
-int	ordenado(pilha **a){
+int	ordenado(pilha **a)
+{
 	pilha *aux;
+
 	aux=*a;
 	while(aux)
 	{
@@ -49,7 +32,6 @@ int	ordenado(pilha **a){
 		}
 		else
 			aux=aux->proximo;
-		
 	}
 	return (1);
 }
@@ -74,7 +56,7 @@ int	ordenar_a(pilha **a, pilha **b)
 			}
 			else if(aux->valor > aux->proximo->valor && posicao!=1)
 			{
-				pa(&*a,&*b);
+				pb(&*a,&*b);
 				aux=*a;
 				posicao=1;
 				index++;
@@ -111,7 +93,7 @@ int	ordenar_b(pilha **a, pilha **b)
 			}
 			else if(aux->valor > aux->proximo->valor)
 			{
-				pb(&*a,&*b);
+				pa(&*a,&*b);
 				aux=*b;
 				posicao=1;
 				index++;
@@ -127,8 +109,9 @@ int	ordenar_b(pilha **a, pilha **b)
 	}
 	return (index);
 }
-void	sorte(pilha **a, pilha **b, int index)
+void	push_swap(pilha **a, pilha **b, int index)
 {
+	
 	pilha *aux;
 	pilha *aux1;
 	int	posicao;
@@ -140,35 +123,27 @@ void	sorte(pilha **a, pilha **b, int index)
 	posicao=1;
 	posicao1=1;
 	menor=menor_valor(aux);
-	while(ordenado(&*a)==0)
+	while(ordenado(&*a) == 0)
 	{
-		printList_a(*a);
-		printList_b(*b);
-	
 		vrra(menor,index,&*a);
-		index-=ordenar_a(&*a,&*b);
-		index+=ordenar_b(&*a,&*b);
+		index -= ordenar_a(&*a, &*b);
+		index += ordenar_b(&*a, &*b);
 	}
-	pb(&*a,&*b);
+	pa(&*a,&*b);
 	sa(&*a);
-}
-
-void	push_swap(pilha **a, pilha **b, int index)
-{
-	sorte(&*a,&*b,index);
 }
 
 int main(int argc, char *argv[])
 {
 	pilha	*a;
 	pilha	*b;
-	int index;
-	index=0;
-	if(argc > 1)
+	int	i;
+	int	valor;
+	int	index;
+	
+	index = 0;
+	if(argc > 2)
 	{
-		int	i;
-		int	valor;
-
 		i = 1;
 		a = NULL;
 		b = NULL;
@@ -178,12 +153,22 @@ int main(int argc, char *argv[])
 			i++;
 		}
 		push_swap(&a,&b,index);
-		printList_a(a);
-		printList_b(b);
 	}
-	else
+	else if(argc == 2)
 	{
-		printf("sem argumentos\n");
+		i = 0;
+		a = NULL;
+		b = NULL;
+		while(argv[1][i] != '\0')
+		{
+			if(argv[1][i] != ' ')
+			{
+				valor = argv[1][i]-'0';
+				index+=inserir_no_fim(&a, valor);
+			}
+			i++;
+		}
+	push_swap(&a,&b,index);
 	}
 	return (0);
 }
