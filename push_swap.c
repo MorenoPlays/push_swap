@@ -163,10 +163,24 @@ int main(int argc, char *argv[])
 		{
 			if(argv[1][i] != ' ')
 			{
-				valor = argv[1][i]-'0';
-				index+=inserir_no_fim(&a, valor);
+				if(argv[1][i + 1]!= ' ')
+				{
+					valor = 0;
+					while (argv[1][i] >= '0' && argv[1][i] <= '9' && argv[1][i] != ' ')
+					{
+						valor = valor * 10 + (argv[1][i] - '0');
+						i++;
+					}
+					index+=inserir_no_fim(&a, valor);
+				}
+				else
+				{
+					valor = argv[1][i]-'0';
+					index+=inserir_no_fim(&a, valor);
+				}
 			}
-			i++;
+			if(argv[1][i]!='\0')
+				i++;
 		}
 	push_swap(&a,&b,index);
 	}
