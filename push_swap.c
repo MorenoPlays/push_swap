@@ -12,18 +12,18 @@
 
 #include "push_swap.h"
 
-int	ordenado(pilha **a)
+int	ordenado(t_pilha **a)
 {
-	pilha *aux;
+	t_pilha		*aux;
 
-	aux=*a;
-	while(aux)
+	aux = *a;
+	while (aux)
 	{
-		if(aux->proximo)
+		if (aux->proximo)
 		{
-			if(aux->valor < aux->proximo->valor)
+			if (aux->valor < aux->proximo->valor)
 			{
-				aux=aux->proximo;
+				aux = aux->proximo;
 			}
 			else
 			{
@@ -31,158 +31,110 @@ int	ordenado(pilha **a)
 			}
 		}
 		else
-			aux=aux->proximo;
+			aux = aux->proximo;
 	}
 	return (1);
 }
 
-int	ordenar_a(pilha **a, pilha **b)
+int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
 {
-	pilha *aux;
-	int	posicao;
-	int index;
-	
-	aux=*a;
-	posicao=1;
-	index=0;
-	while(aux)
+	t_pilha		*aux;
+
+	aux = *a;
+	while (aux && aux->proximo)
 	{
-		if(aux->proximo)
+		if ((aux->valor > aux->proximo->valor) && posicao == 1)
 		{
-			if(aux->valor > aux->proximo->valor && posicao==1)
-			{
-				sa(&*a);
-				aux=*a;
-			}
-			else if(aux->valor > aux->proximo->valor && posicao!=1)
-			{
-				pb(&*a,&*b);
-				aux=*a;
-				posicao=1;
-				index++;
-			}
-			else
-			{
-				aux=aux->proximo;
-				posicao++;
-			}
+			sa(&*a);
+			aux = *a;
+		}
+		else if ((aux->valor > aux->proximo->valor) && posicao != 1)
+		{
+			pb(&*a, &*b);
+			aux = *a;
+			posicao = 1;
+			index++;
 		}
 		else
-			aux=aux->proximo;
+		{
+			aux = aux->proximo;
+			posicao++;
+		}
 	}
 	return (index);
 }
 
-int	ordenar_b(pilha **a, pilha **b)
+int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 {
-	pilha *aux;
-	int	posicao;
-	int index;
-	
-	aux=*b;
-	posicao=1;
-	index=0;
-	while(aux)
+	t_pilha		*aux;
+
+	aux = *b;
+	while (aux && aux->proximo)
 	{
-		if(aux->proximo)
+		if (aux->valor < aux->proximo->valor && posicao == 1)
 		{
-			if(aux->valor < aux->proximo->valor && posicao==1)
-			{
-				sb(&*b);
-				aux=*b;
-			}
-			else if(aux->valor > aux->proximo->valor)
-			{
-				pa(&*a,&*b);
-				aux=*b;
-				posicao=1;
-				index++;
-			}
-			else
-			{
-				aux=aux->proximo;
-				posicao++;
-			}
+			sb(&*b);
+			aux = *b;
+		}
+		else if (aux->valor > aux->proximo->valor)
+		{
+			pa(&*a, &*b);
+			aux = *b;
+			posicao = 1;
+			index++;
 		}
 		else
-			aux=aux->proximo;
+		{
+			aux = aux->proximo;
+			posicao++;
+		}
 	}
 	return (index);
 }
-void	push_swap(pilha **a, pilha **b, int index)
-{
-	
-	pilha *aux;
-	pilha *aux1;
-	int	posicao;
-	int	posicao1;
-	int menor;
 
-	aux=*a;
-	aux1=*b;
-	posicao=1;
-	posicao1=1;
-	menor=menor_valor(aux);
-	while(ordenado(&*a) == 0)
+void	push_swap(t_pilha **a, t_pilha **b, int index)
+{
+	t_pilha		*aux;
+	t_pilha		*aux1;
+	int			posicao;
+	int			posicao1;
+	int			menor;
+
+	aux = *a;
+	aux1 = *b;
+	posicao = 1;
+	posicao1 = 1;
+	menor = menor_valor(aux);
+	while (ordenado(&*a) == 0)
 	{
-		vrra(menor,index,&*a);
-		index -= ordenar_a(&*a, &*b);
-		index += ordenar_b(&*a, &*b);
+		vrra(menor, index, &*a);
+		index -= ordenar_a(&*a, &*b, 0, 1);
+		index += ordenar_b(&*a, &*b, 0, 1);
 	}
-	pa(&*a,&*b);
+	pa(&*a, &*b);
 	sa(&*a);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	pilha	*a;
-	pilha	*b;
-	int	i;
-	int	valor;
-	int	index;
-	
+	t_pilha		*a;
+	t_pilha		*b;
+	int			i;
+	int			valor;
+	int			index;
+
 	index = 0;
-	if(argc > 2)
+	a = NULL;
+	b = NULL;
+	if (argc == 1)
+		return (0);
+	if (argc > 2 && verificador(argv, 1) == 1)
 	{
-		i = 1;
-		a = NULL;
-		b = NULL;
-		while(argv[i] != (void *)0)
-		{	valor = atoi(argv[i]);
-			index+=inserir_no_fim(&a, valor);
-			i++;
-		}
-		push_swap(&a,&b,index);
+		insercao(a, b, argv);
 	}
-	else if(argc == 2)
-	{
-		i = 0;
-		a = NULL;
-		b = NULL;
-		while(argv[1][i] != '\0')
-		{
-			if(argv[1][i] != ' ')
-			{
-				if(argv[1][i + 1]!= ' ')
-				{
-					valor = 0;
-					while (argv[1][i] >= '0' && argv[1][i] <= '9' && argv[1][i] != ' ')
-					{
-						valor = valor * 10 + (argv[1][i] - '0');
-						i++;
-					}
-					index+=inserir_no_fim(&a, valor);
-				}
-				else
-				{
-					valor = argv[1][i]-'0';
-					index+=inserir_no_fim(&a, valor);
-				}
-			}
-			if(argv[1][i]!='\0')
-				i++;
-		}
-	push_swap(&a,&b,index);
-	}
+	else if (argc == 2 && verificador2(argv[1], 0) == 1)
+		parametro1(a, b, argv);
+	else
+		write(1, "Erro", 4);
 	return (0);
 }

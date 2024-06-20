@@ -14,27 +14,34 @@
 # define PUSH_SWAP_H
 # include <limits.h>
 # include "libft/libft.h"
+
 typedef struct lista
 {
-	int	valor;
 	struct lista	*proximo;
-}	pilha;
+	int				valor;
+}					t_pilha;
 
-void	inserir_inicio(pilha **lista, int valor);
-int	inserir_no_fim(pilha **lista, int valor);
-void	sa(pilha **a);
-void	sb(pilha **b);
-void	ss(pilha *a, pilha *b);
-void	pa(pilha **a, pilha **b);
-void	pb(pilha **a, pilha **b);
-void	ra(pilha **a);
-void	rb(pilha **b);
-void	rr(pilha **a, pilha **b);
-void	rra(pilha **a);
-void	rrb(pilha **b);
-void	rrr(pilha **a, pilha **b);
-void	vrra(int min_valor,int index, pilha **a);
-int	menor_valor(pilha *head);
-int maior_valor(pilha *head);
-void vra(int maior_valor, pilha **a);
-# endif
+void	inserir_inicio(t_pilha **lista, int valor);
+int		inserir_no_fim(t_pilha **lista, int valor);
+void	sa(t_pilha **a);
+void	sb(t_pilha **b);
+void	ss(t_pilha *a, t_pilha *b);
+void	pa(t_pilha **a, t_pilha **b);
+void	pb(t_pilha **a, t_pilha **b);
+void	ra(t_pilha **a);
+void	rb(t_pilha **b);
+void	rr(t_pilha **a, t_pilha **b);
+void	rra(t_pilha **a);
+void	rrb(t_pilha **b);
+void	rrr(t_pilha **a, t_pilha **b);
+void	vrra(int min_valor, int index, t_pilha **a);
+int		menor_valor(t_pilha *head);
+int		maior_valor(t_pilha *head);
+int		verificador(char **str, int i);
+int		verificador2(char *str, int a);
+void	parametro1(t_pilha *a, t_pilha *b, char **argv);
+void	vra(int maior_valor, t_pilha **a);
+void	push_swap(t_pilha **a, t_pilha **b, int index);
+void	insercao(t_pilha *a, t_pilha *b, char **argv);
+int		insercao2(t_pilha **a, t_pilha **b, char **argv, int *vi);
+#endif

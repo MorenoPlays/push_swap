@@ -12,47 +12,48 @@
 
 #include "push_swap.h"
 
-void	rra(pilha **a)
+void	rra(t_pilha **a)
 {
-	pilha *aux;
-	pilha *anterior=NULL;
+	int			num;
+	t_pilha		*aux;
+	t_pilha		*anterior;
 
-	int	num;
-	aux=*a;
-	if(aux->proximo)
+	aux = *a;
+	anterior = NULL;
+	if (aux->proximo)
 	{
-		while(aux->proximo)
-        	{
-			anterior=aux;
-            		aux=aux->proximo;
-        	}
-        num = aux->valor;
-	inserir_inicio(&*a, num);
-        anterior->proximo=NULL;
-        write(1, "rra\n", 4);
+		while (aux->proximo)
+		{
+			anterior = aux;
+			aux = aux->proximo;
+		}
+		num = aux->valor;
+		inserir_inicio(&*a, num);
+		anterior->proximo = NULL;
+		write(1, "rra\n", 4);
 	}
 }
 
-void	rrb(pilha **b)
+void	rrb(t_pilha **b)
 {
-	pilha *aux;
-	int		num;
+	t_pilha		*aux;
+	int			num;
 
 	aux = *b;
 	if (aux)
 	{
-		while(aux->proximo->proximo)
-        	{
-            		aux=aux->proximo;
-        	}
-        num = aux->proximo->valor;
-	inserir_inicio(&*b, num);
-        aux->proximo = NULL;
-        write(1, "rrb\n", 3);
+		while (aux->proximo->proximo)
+		{
+			aux = aux->proximo;
+		}
+		num = aux->proximo->valor;
+		inserir_inicio(&*b, num);
+		aux->proximo = NULL;
+		write(1, "rrb\n", 3);
 	}
 }
 
-void	rrr(pilha **a, pilha **b)
+void	rrr(t_pilha **a, t_pilha **b)
 {
 	rra(&*a);
 	rrb(&*b);
