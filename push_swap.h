@@ -43,5 +43,7 @@ void	parametro1(t_pilha *a, t_pilha *b, char **argv);
 void	vra(int maior_valor, t_pilha **a);
 void	push_swap(t_pilha **a, t_pilha **b, int index);
 void	insercao(t_pilha *a, t_pilha *b, char **argv);
-int		insercao2(t_pilha **a, t_pilha **b, char **argv, int *vi);
+int		insercao2(t_pilha **a, char **argv, int *vi);
+int		number_replace(char *str, int v);
+int		quatia(t_pilha **a);
 #endif

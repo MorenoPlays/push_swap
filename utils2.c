@@ -82,7 +82,6 @@ int	verificador(char **str, int i)
 int	verificador2(char *str, int a)
 {
 	int	v;
-	int	j;
 
 	a = 0;
 	v = 1;
@@ -93,24 +92,11 @@ int	verificador2(char *str, int a)
 			v = 0;
 		a++;
 	}
-	a = 0;
-	while (str[a] != '\0')
-	{
-		j = a + 1;
-		while (str[j] != '\0')
-		{
-			if (str[a] == str[j] && str[j] != ' ')
-				v = 0;
-			j++;
-		}
-		a++;
-	}
 	return (v);
 }
 
 void	parametro1(t_pilha *a, t_pilha *b, char **argv)
 {
-	int	valor;
 	int	i;
 	int	index;
 	int	*vi;
@@ -122,7 +108,7 @@ void	parametro1(t_pilha *a, t_pilha *b, char **argv)
 		if (argv[1][i] != ' ')
 		{
 			vi = &i;
-			index += insercao2(&a, &b, argv, vi);
+			index += insercao2(&a, argv, vi);
 		}
 		if (argv[1][i] != '\0')
 			i++;
