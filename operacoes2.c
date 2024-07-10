@@ -22,8 +22,8 @@ void	ra(t_pilha **a)
 	{
 		num = aux->valor;
 		inserir_no_fim(&*a, num);
-		aux = aux->proximo;
-		(*a) = aux;
+		(*a) = (*a)->proximo;
+		free(aux);
 		write(1, "ra\n", 3);
 	}
 }
@@ -31,15 +31,18 @@ void	ra(t_pilha **a)
 void	rb(t_pilha **b)
 {
 	t_pilha		*aux;
+	t_pilha		*anterior;
 	int			num;
 
 	aux = *b;
 	if (aux)
 	{
 		num = aux->valor;
+		anterior = aux;
 		inserir_no_fim(&*b, num);
 		aux = aux->proximo;
 		(*b) = aux;
+		free(anterior);
 		write(1, "rb\n", 3);
 	}
 }

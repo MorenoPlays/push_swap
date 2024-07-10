@@ -26,34 +26,29 @@ void	insercao(t_pilha *a, t_pilha *b, char **argv)
 		index += inserir_no_fim(&a, valor);
 		i++;
 	}
-	push_swap(&a, &b, index);
+	if (ordenado(&a) == 0)
+	{
+		push_swap(&a, &b, index);
+	}
+	ft_remove_list(&a, &b);
 }
 
-int	insercao2(t_pilha **a, char **argv, int *vi)
+void	insercao2(t_pilha *a, t_pilha *b, char **argv)
 {
+	int	i;
 	int	valor;
 	int	index;
-	int	i;
-	int	p;
 
-	i = *vi;
 	index = 0;
-	if (argv[1][i + 1] != ' ')
+	i = 0;
+	while (argv[i] != (void *)0)
 	{
-		valor = 0;
-		if (argv[1][i++] == '-')
-			p = -1;
-		else
-			p = 1;
-		while (argv[1][i] >= '0' && argv[1][i] <= '9'
-				&& argv[1][i] != ' ')
-			valor = valor * 10 + (argv[1][i++] - '0');
-		index += inserir_no_fim(&*a, (valor * p));
+		valor = ft_atoi(argv[i]);
+		index += inserir_no_fim(&a, valor);
+		i++;
 	}
-	else
-		index += inserir_no_fim(&*a, (argv[1][i] - '0'));
-	*vi = i;
-	return (index);
+	push_swap(&a, &b, index);
+	ft_remove_list(&a, &b);
 }
 
 int	number_replace(char *str, int v)
@@ -100,4 +95,31 @@ int	quatia(t_pilha **a)
 		}
 	}
 	return (num);
+}
+
+void	ordenar_ab(t_pilha **a, t_pilha **b)
+{
+	t_pilha		*aux;
+	int			i;
+	int			j;
+
+	aux = *a;
+	i = 0;
+	j = 0;
+	if (aux && aux->proximo)
+	{
+		if ((aux->valor > aux->proximo->valor))
+			i = 1;
+	}
+	aux = *b;
+	if (aux && aux->proximo)
+	{
+		if (aux->valor < aux->proximo->valor)
+			j = 1;
+	}
+	if (j == 1 && i == 1)
+		ss(&*a, &*b);
+	vra(maior_valor(*a), &*a);
+	vrrr(menor_valor(*a), maior_valor(*b), &*a, &*b);
+	vrra(menor_valor(*a), &*a);
 }

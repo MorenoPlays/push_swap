@@ -20,7 +20,7 @@ void	rra(t_pilha **a)
 
 	aux = *a;
 	anterior = NULL;
-	if (aux->proximo)
+	if (aux && aux->proximo)
 	{
 		while (aux->proximo)
 		{
@@ -30,31 +30,37 @@ void	rra(t_pilha **a)
 		num = aux->valor;
 		inserir_inicio(&*a, num);
 		anterior->proximo = NULL;
+		free(aux);
 		write(1, "rra\n", 4);
 	}
 }
 
 void	rrb(t_pilha **b)
 {
-	t_pilha		*aux;
 	int			num;
+	t_pilha		*aux;
+	t_pilha		*anterior;
 
 	aux = *b;
-	if (aux)
+	anterior = NULL;
+	if (aux && aux->proximo)
 	{
-		while (aux->proximo->proximo)
+		while (aux->proximo)
 		{
+			anterior = aux;
 			aux = aux->proximo;
 		}
-		num = aux->proximo->valor;
+		num = aux->valor;
 		inserir_inicio(&*b, num);
-		aux->proximo = NULL;
-		write(1, "rrb\n", 3);
+		anterior->proximo = NULL;
+		free(aux);
+		write(1, "rrb\n", 4);
 	}
 }
 
 void	rrr(t_pilha **a, t_pilha **b)
 {
-	rra(&*a);
-	rrb(&*b);
+	rra1(&*a);
+	rrb1(&*b);
+	write(1, "rrr\n", 4);
 }

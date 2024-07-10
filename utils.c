@@ -43,13 +43,13 @@ int	inserir_no_fim(t_pilha **lista, int valor)
 		{
 			aux = *lista;
 			while (aux->proximo != NULL)
-			{
 				aux = aux->proximo;
-			}
 			aux->proximo = novo;
 		}
 		index++;
 	}
+	else
+		free(novo);
 	return (index);
 }
 
@@ -89,25 +89,20 @@ int	maior_valor(t_pilha *head)
 	return (max);
 }
 
-void	vrra(int min_valor, int index, t_pilha **a)
+void	vrra(int min_valor, t_pilha **a)
 {
 	t_pilha		*aux;
-	int			posicao;
+	int			valor;
 
-	if (index > 2)
+	valor = 0;
+	aux = *a;
+	while (aux)
 	{
-		aux = *a;
-		posicao = 1;
-		while (aux != NULL)
-		{
-			if (aux->valor == min_valor)
-			{
-				break ;
-			}
-			posicao++;
-			aux = aux->proximo;
-		}
-		if (posicao == index)
-			rra(&*a);
+		valor = aux->valor;
+		aux = aux->proximo;
+	}
+	if (valor == min_valor)
+	{
+		rra(&*a);
 	}
 }

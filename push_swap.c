@@ -45,6 +45,7 @@ int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
 	{
 		if ((aux->valor > aux->proximo->valor) && posicao == 1)
 		{
+			ordenar_ab(&*a, &*b);
 			sa(&*a);
 			aux = *a;
 		}
@@ -73,6 +74,7 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 	{
 		if (aux->valor < aux->proximo->valor && posicao == 1)
 		{
+			ordenar_ab(&*a, &*b);
 			sb(&*b);
 			aux = *b;
 		}
@@ -94,24 +96,16 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 
 void	push_swap(t_pilha **a, t_pilha **b, int index)
 {
-	t_pilha		*aux;
-	int			menor;
-
-	if (quatia(&*a) >= 1)
+	while (ordenado(&*a) == 0)
 	{
-		aux = *a;
-		menor = menor_valor(aux);
-		while (ordenado(&*a) == 0)
-		{
-			vrra(menor, index, &*a);
-			index -= ordenar_a(&*a, &*b, 0, 1);
-			index += ordenar_b(&*a, &*b, 0, 1);
-		}
-		pa(&*a, &*b);
-		sa(&*a);
+		ordenar_ab(&*a, &*b);
+		index -= ordenar_a(&*a, &*b, 0, 1);
+		index += ordenar_b(&*a, &*b, 0, 1);
 	}
-	else
-		ft_putstr_fd("Error\n", 2);
+	pa(&*a, &*b);
+	sa(&*a);
+	if (ordenado(&*a) == 0)
+		push_swap(&*a, &*b, index);
 }
 
 int	main(int argc, char *argv[])
@@ -123,13 +117,11 @@ int	main(int argc, char *argv[])
 	b = NULL;
 	if (argc == 1)
 		return (0);
-	if (argc > 2 && verificador(argv, 1) == 1)
-	{
+	if (argc > 2 && verificador(argv, 1) == 1 && argv[1][0])
 		insercao(a, b, argv);
-	}
 	else if (argc == 2 && verificador2(argv[1], 0) == 1
-		&& number_replace(argv[1], 1) == 1)
-		parametro1(a, b, argv);
+		&& number_replace(argv[1], 1) == 1 && argv[1][0])
+		insercao2(a, b, ft_split(argv[1], ' '));
 	else
 	{
 		ft_putstr_fd("Error\n", 2);
