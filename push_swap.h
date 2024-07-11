@@ -19,6 +19,7 @@ typedef struct lista
 {
 	struct lista	*proximo;
 	int				valor;
+	int				index;
 }					t_pilha;
 
 void	inserir_inicio(t_pilha **lista, int valor);
@@ -42,13 +43,16 @@ int		maior_valor(t_pilha *head);
 int		verificador(char **str, int i);
 int		verificador2(char *str, int a);
 void	vra(int maior_valor, t_pilha **a);
+void	vrb(int menor_valor, t_pilha **b);
 void	push_swap(t_pilha **a, t_pilha **b, int index);
 void	insercao(t_pilha *a, t_pilha *b, char **argv);
 void	insercao2(t_pilha *a, t_pilha *b, char **argv);
 int		number_replace(char *str, int v);
-int		quatia(t_pilha **a);
+int		quatia(t_pilha **a, t_pilha **b);
 void	ordenar_ab(t_pilha **a, t_pilha **b);
 int		ordenado(t_pilha **a);
+int		ordenado_b(t_pilha **b);
 void	vrrr(int menor_de_a, int maior_de_b, t_pilha **a, t_pilha **b);
 void	ft_remove_list(t_pilha **a, t_pilha **b);
+void	vrrb(int maior_valor, t_pilha **b);
 #endif

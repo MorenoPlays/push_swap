@@ -20,13 +20,10 @@ void	sa(t_pilha **a)
 	aux = *a;
 	if (aux && aux->proximo)
 	{
-		if (aux->valor > aux->proximo->valor)
-		{
-			num = aux->valor;
-			aux->valor = aux->proximo->valor;
-			aux->proximo->valor = num;
-			write(1, "sa\n", 3);
-		}
+		num = aux->valor;
+		aux->valor = aux->proximo->valor;
+		aux->proximo->valor = num;
+		write(1, "sa\n", 3);
 	}
 }
 

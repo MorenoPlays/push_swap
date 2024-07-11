@@ -64,3 +64,29 @@ void	rrr(t_pilha **a, t_pilha **b)
 	rrb1(&*b);
 	write(1, "rrr\n", 4);
 }
+
+int	ordenado_b(t_pilha **b)
+{
+	t_pilha		*aux;
+
+	aux = *b;
+	if(!aux)
+		return (0);
+	while (aux)
+	{
+		if (aux->proximo)
+		{
+			if (aux->valor > aux->proximo->valor)
+			{
+				aux = aux->proximo;
+			}
+			else
+			{
+				return (1);
+			}
+		}
+		else
+			aux = aux->proximo;
+	}
+	return (1);
+}

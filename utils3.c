@@ -12,6 +12,69 @@
 
 #include "push_swap.h"
 
+void	index_stack(t_list **stack)
+{
+	t_list	*head;
+	int		index;
+
+	index = 0;
+	head = get_next_min(stack);
+	while (head)
+	{
+		head->index = index++;
+		head = get_next_min(stack);
+	}
+}
+
+static int	get_max_bits(t_list **stack)
+{
+	t_list	*head;
+	int		max;
+	int		max_bits;
+
+	head = *stack;
+	max = head->index;
+	max_bits = 0;
+	while (head)
+	{
+		if (head->index > max)
+			max = head->index;
+		head = head->next;
+	}
+	while ((max >> max_bits) != 0)
+		max_bits++;
+	return (max_bits);
+}
+
+void	radix_sort(t_list **stack_a, t_list **stack_b)
+{
+	t_list	*head_a;
+	int		i;
+	int		j;
+	int		size;
+	int		max_bits;
+
+	i = 0;
+	head_a = *stack_a;
+	size = ft_lstsize(head_a);
+	max_bits = get_max_bits(stack_a);
+	while (i < max_bits)
+	{
+		j = 0;
+		while (j++ < size)
+		{
+			head_a = *stack_a;
+			if (((head_a->index >> i) & 1) == 1)
+				ra(stack_a);
+			else
+				pb(stack_a, stack_b);
+		}
+		while (ft_lstsize(*stack_b) != 0)
+			pa(stack_a, stack_b);
+		i++;
+	}
+}
+
 void	insercao(t_pilha *a, t_pilha *b, char **argv)
 {
 	int	i;
@@ -80,12 +143,13 @@ int	number_replace(char *str, int v)
 	return (v);
 }
 
-int	quatia(t_pilha **a)
+int	quatia(t_pilha **a, t_pilha **b)
 {
 	int			num;
 	t_pilha		*aux;
-
+	//t_pilha		*aux1;
 	aux = *a;
+	num = 0;
 	if (aux->proximo)
 	{
 		while (aux->proximo)
@@ -93,6 +157,38 @@ int	quatia(t_pilha **a)
 			aux = aux->proximo;
 			num++;
 		}
+	}
+	if(num > 6 && ordenado(&*a) == 0)
+	{
+		radix_sort(&*a, &*b);
+		/*while(ordenado(&*a)==0)
+		{
+			vra(maior_valor(*a), &*a);
+			vrra(menor_valor(*a), &*a);
+			if(!(*b))
+				pb(&*a, &*b);
+			if((*a)->valor > (*b)->valor)
+				pb(&*a, &*b);
+			else if ((*a)->valor > (*a)->proximo->valor)
+				ra(&*a);
+			else if ((*a)->valor < (*b)->valor)
+			{
+				pa(&*a, &*b);
+				sa(&*a);
+			}
+			else
+			{
+				pb(&*a, &*b);
+				vrb(menor_valor(*b), &*b);
+				vrrb(maior_valor(*b), &*b);
+			}
+		}*/
+	}
+	aux = *b;
+	while(aux)
+	{
+		printf("valor:%d\n" ,aux->valor);
+		aux = aux->proximo;
 	}
 	return (num);
 }
@@ -120,6 +216,8 @@ void	ordenar_ab(t_pilha **a, t_pilha **b)
 	if (j == 1 && i == 1)
 		ss(&*a, &*b);
 	vra(maior_valor(*a), &*a);
+	vrb(menor_valor(*b), &*b);
 	vrrr(menor_valor(*a), maior_valor(*b), &*a, &*b);
 	vrra(menor_valor(*a), &*a);
+	vrrb(maior_valor(*b), &*b);
 }

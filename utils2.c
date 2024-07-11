@@ -15,18 +15,14 @@
 void	vra(int maior_valor, t_pilha **a)
 {
 	t_pilha		*aux;
-	int			posicao;
 
 	aux = *a;
-	posicao = 1;
-	while (aux != NULL)
-	{
-		if (aux->valor == maior_valor)
-			break ;
-		posicao++;
+	if(!aux)
+		return ;
+	while(aux)
 		aux = aux->proximo;
-	}
-	if (posicao == 1)
+	aux = *a;
+	if (aux->valor == maior_valor)
 		ra(&*a);
 }
 
@@ -96,4 +92,23 @@ int	verificador2(char *str, int a)
 		a++;
 	}
 	return (v);
+}
+
+void	vrrb(int maior_valor, t_pilha **b)
+{
+	t_pilha		*aux;
+	int			valor;
+	int			total;
+
+	valor = 0;
+	total = 0;
+	aux = *b;
+	while (aux)
+	{
+		valor = aux->valor;
+		aux = aux->proximo;
+		total++;
+	}
+	if (valor == maior_valor && total > 2)
+		rrb(&*b);
 }

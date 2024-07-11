@@ -36,19 +36,23 @@ void	rra1(t_pilha **a)
 
 void	rrb1(t_pilha **b)
 {
-	t_pilha		*aux;
 	int			num;
+	t_pilha		*aux;
+	t_pilha		*anterior;
 
 	aux = *b;
-	if (aux)
+	anterior = NULL;
+	if (aux && aux->proximo)
 	{
-		while (aux->proximo->proximo)
+		while (aux->proximo)
 		{
+			anterior = aux;
 			aux = aux->proximo;
 		}
-		num = aux->proximo->valor;
+		num = aux->valor;
 		inserir_inicio(&*b, num);
-		aux->proximo = NULL;
+		anterior->proximo = NULL;
+		free(aux);
 	}
 }
 
@@ -74,6 +78,25 @@ void	vrrr(int menor_de_a, int maior_de_b, t_pilha **a, t_pilha **b)
 		vb = 1;
 	if (vb == 1 && va == 1)
 		rrr(&*a, &*b);
+}
+
+void	vrb(int menor_valor, t_pilha **b)
+{
+	t_pilha		*aux;
+	int		total;
+
+	total = 0;
+	aux = *b;
+	if(!aux)
+		return ;
+	while(aux)
+	{
+		total++;
+		aux = aux->proximo;
+	}
+	aux = *b;
+	if (aux->valor == menor_valor && total > 2)
+		rb(&*b);
 }
 
 void	ft_remove_list(t_pilha **a, t_pilha **b)

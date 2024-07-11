@@ -47,11 +47,13 @@ int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
 		{
 			ordenar_ab(&*a, &*b);
 			sa(&*a);
+			vra(maior_valor(*a), &*a);
 			aux = *a;
 		}
 		else if ((aux->valor > aux->proximo->valor) && posicao != 1)
 		{
 			pb(&*a, &*b);
+			vra(maior_valor(*a), &*a);
 			aux = *a;
 			posicao = 1;
 			index++;
@@ -76,11 +78,13 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 		{
 			ordenar_ab(&*a, &*b);
 			sb(&*b);
+			vrb(menor_valor(*b), &*b);
 			aux = *b;
 		}
 		else if (aux->valor > aux->proximo->valor)
 		{
 			pa(&*a, &*b);
+			vrb(menor_valor(*b), &*b);
 			aux = *b;
 			posicao = 1;
 			index++;
@@ -96,7 +100,9 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 
 void	push_swap(t_pilha **a, t_pilha **b, int index)
 {
-	while (ordenado(&*a) == 0)
+	quatia(&*a, &*b);
+	index = index +1;
+	/*while (ordenado(&*a) == 0)
 	{
 		ordenar_ab(&*a, &*b);
 		index -= ordenar_a(&*a, &*b, 0, 1);
@@ -104,8 +110,8 @@ void	push_swap(t_pilha **a, t_pilha **b, int index)
 	}
 	pa(&*a, &*b);
 	sa(&*a);
-	if (ordenado(&*a) == 0)
-		push_swap(&*a, &*b, index);
+	if (ordenado(&*a) == 0 || ordenado_b(&*b) == 1)
+		push_swap(&*a, &*b, index);*/
 }
 
 int	main(int argc, char *argv[])
