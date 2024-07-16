@@ -28,7 +28,7 @@ void	rra1(t_pilha **a)
 			aux = aux->proximo;
 		}
 		num = aux->valor;
-		inserir_inicio(&*a, num);
+		inserir_inicio(&*a, num, num);
 		anterior->proximo = NULL;
 		free(aux);
 	}
@@ -50,7 +50,7 @@ void	rrb1(t_pilha **b)
 			aux = aux->proximo;
 		}
 		num = aux->valor;
-		inserir_inicio(&*b, num);
+		inserir_inicio(&*b, num, num);
 		anterior->proximo = NULL;
 		free(aux);
 	}
@@ -80,26 +80,7 @@ void	vrrr(int menor_de_a, int maior_de_b, t_pilha **a, t_pilha **b)
 		rrr(&*a, &*b);
 }
 
-void	vrb(int menor_valor, t_pilha **b)
-{
-	t_pilha		*aux;
-	int		total;
-
-	total = 0;
-	aux = *b;
-	if(!aux)
-		return ;
-	while(aux)
-	{
-		total++;
-		aux = aux->proximo;
-	}
-	aux = *b;
-	if (aux->valor == menor_valor && total > 2)
-		rb(&*b);
-}
-
-void	ft_remove_list(t_pilha **a, t_pilha **b)
+void	ft_remove_list(t_pilha **a)
 {
 	t_pilha		*aux;
 
@@ -110,11 +91,32 @@ void	ft_remove_list(t_pilha **a, t_pilha **b)
 		free(aux);
 		aux = *a;
 	}
-	aux = *b;
-	while (aux)
+}
+
+long int	ft_atoi_long(const char *str)
+{
+	int			i;
+	int			np;
+	long int	num;
+
+	np = 1;
+	i = 0;
+	num = 0;
+	while ((str[i] == ' ' || str[i] == '\t') || str[i] == '\f'
+		|| str[i] == '\r' || str[i] == '\n' || str[i] == '\v')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		if (str[i++] == '-')
+			np = -1;
+	if (str[i] == '+' || str[i] == '-' || !(str[i] >= '0' && str[i] <= '9'))
 	{
-		*a = aux->proximo;
-		free(aux);
-		aux = *a;
+		ft_putstr_fd("Error\n", 2);
+		exit(1);
 	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = num * 10 + (str[i] - '0');
+		i++;
+	}
+	return ((long int)(np * num));
 }

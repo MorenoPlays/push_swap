@@ -45,15 +45,13 @@ int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
 	{
 		if ((aux->valor > aux->proximo->valor) && posicao == 1)
 		{
-			ordenar_ab(&*a, &*b);
 			sa(&*a);
-			vra(maior_valor(*a), &*a);
 			aux = *a;
 		}
 		else if ((aux->valor > aux->proximo->valor) && posicao != 1)
 		{
 			pb(&*a, &*b);
-			vra(maior_valor(*a), &*a);
+			ordenar_ab(&*a, &*b);
 			aux = *a;
 			posicao = 1;
 			index++;
@@ -76,15 +74,13 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 	{
 		if (aux->valor < aux->proximo->valor && posicao == 1)
 		{
-			ordenar_ab(&*a, &*b);
 			sb(&*b);
-			vrb(menor_valor(*b), &*b);
 			aux = *b;
 		}
 		else if (aux->valor > aux->proximo->valor)
 		{
 			pa(&*a, &*b);
-			vrb(menor_valor(*b), &*b);
+			ordenar_ab(&*a, &*b);
 			aux = *b;
 			posicao = 1;
 			index++;
@@ -100,18 +96,21 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 
 void	push_swap(t_pilha **a, t_pilha **b, int index)
 {
-	quatia(&*a, &*b);
-	index = index +1;
-	/*while (ordenado(&*a) == 0)
+	if (quatia(&*a) < 6)
 	{
-		ordenar_ab(&*a, &*b);
-		index -= ordenar_a(&*a, &*b, 0, 1);
-		index += ordenar_b(&*a, &*b, 0, 1);
+		while (ordenado(&*a) == 0)
+		{
+			ordenar_ab(&*a, &*b);
+			index -= ordenar_a(&*a, &*b, 0, 1);
+			index += ordenar_b(&*a, &*b, 0, 1);
+		}
+		pa(&*a, &*b);
+		sa(&*a);
+		if (ordenado(&*a) == 0)
+			push_swap(&*a, &*b, index);
 	}
-	pa(&*a, &*b);
-	sa(&*a);
-	if (ordenado(&*a) == 0 || ordenado_b(&*b) == 1)
-		push_swap(&*a, &*b, index);*/
+	else
+		radix(&*a, &*b);
 }
 
 int	main(int argc, char *argv[])
@@ -131,6 +130,7 @@ int	main(int argc, char *argv[])
 	else
 	{
 		ft_putstr_fd("Error\n", 2);
+		exit(1);
 	}
 	return (0);
 }

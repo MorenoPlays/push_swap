@@ -20,10 +20,13 @@ void	sa(t_pilha **a)
 	aux = *a;
 	if (aux && aux->proximo)
 	{
-		num = aux->valor;
-		aux->valor = aux->proximo->valor;
-		aux->proximo->valor = num;
-		write(1, "sa\n", 3);
+		if (aux->valor > aux->proximo->valor)
+		{
+			num = aux->valor;
+			aux->valor = aux->proximo->valor;
+			aux->proximo->valor = num;
+			write(1, "sa\n", 3);
+		}
 	}
 }
 
@@ -72,13 +75,15 @@ void	pb(t_pilha **a, t_pilha **b)
 	t_pilha		*aux;
 	t_pilha		*anterior;
 	int			num;
+	int			mod;
 
 	aux = *a;
-	if (aux && aux->proximo)
+	if (aux)
 	{
 		num = aux->valor;
+		mod = aux->mod;
 		anterior = aux;
-		inserir_inicio(&*b, num);
+		inserir_inicio(&*b, num, mod);
 		aux = aux->proximo;
 		(*a) = aux;
 		free(anterior);
@@ -91,13 +96,15 @@ void	pa(t_pilha **a, t_pilha **b)
 	t_pilha		*aux;
 	t_pilha		*anterior;
 	int			num;
+	int			mod;
 
 	aux = *b;
 	if (aux)
 	{
 		num = aux->valor;
+		mod = aux->mod;
 		anterior = aux;
-		inserir_inicio(&*a, num);
+		inserir_inicio(&*a, num, mod * 10);
 		aux = aux->proximo;
 		(*b) = aux;
 		free(anterior);

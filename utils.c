@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	inserir_inicio(t_pilha **lista, int valor)
+void	inserir_inicio(t_pilha **lista, int valor, int mod)
 {
 	t_pilha		*novo;
 
@@ -20,6 +20,7 @@ void	inserir_inicio(t_pilha **lista, int valor)
 	if (novo)
 	{
 		novo->valor = valor;
+		novo->mod = mod;
 		novo->proximo = *lista;
 		*lista = novo;
 	}
@@ -93,18 +94,15 @@ void	vrra(int min_valor, t_pilha **a)
 {
 	t_pilha		*aux;
 	int			valor;
-	int			total;
 
 	valor = 0;
-	total = 0;
 	aux = *a;
 	while (aux)
 	{
 		valor = aux->valor;
 		aux = aux->proximo;
-		total++;
 	}
-	if (valor == min_valor && total > 2)
+	if (valor == min_valor)
 	{
 		rra(&*a);
 	}

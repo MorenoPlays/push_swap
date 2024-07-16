@@ -52,3 +52,16 @@ void	rr(t_pilha **a, t_pilha **b)
 	ra(&*a);
 	rb(&*b);
 }
+
+void	ft_remove_matriz(char **a)
+{
+	int	i;
+
+	i = 0;
+	while (a[i] != (void *)0)
+	{
+		free(a[i]);
+		i++;
+	}
+	free(a);
+}

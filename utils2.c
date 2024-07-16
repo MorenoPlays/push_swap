@@ -15,14 +15,18 @@
 void	vra(int maior_valor, t_pilha **a)
 {
 	t_pilha		*aux;
+	int			posicao;
 
 	aux = *a;
-	if(!aux)
-		return ;
-	while(aux)
+	posicao = 1;
+	while (aux != NULL)
+	{
+		if (aux->valor == maior_valor)
+			break ;
+		posicao++;
 		aux = aux->proximo;
-	aux = *a;
-	if (aux->valor == maior_valor)
+	}
+	if (posicao == 1)
 		ra(&*a);
 }
 
@@ -94,21 +98,22 @@ int	verificador2(char *str, int a)
 	return (v);
 }
 
-void	vrrb(int maior_valor, t_pilha **b)
+int	*push(t_pilha **a)
 {
+	int			i;
+	int			*lista;
 	t_pilha		*aux;
-	int			valor;
-	int			total;
 
-	valor = 0;
-	total = 0;
-	aux = *b;
+	i = quatia(a);
+	lista = malloc(i * sizeof(int *));
+	i = 0;
+	aux = *a;
 	while (aux)
 	{
-		valor = aux->valor;
+		lista[i] = aux->valor;
 		aux = aux->proximo;
-		total++;
+		i++;
 	}
-	if (valor == maior_valor && total > 2)
-		rrb(&*b);
+	lista[i] = '\0';
+	return (lista);
 }
