@@ -12,93 +12,61 @@
 
 #include "push_swap.h"
 
-static t_pilha	*get_next_min(t_pilha **stack)
+int	rr(t_liste **a, t_liste **b)
 {
-	t_pilha	*head;
-	t_pilha	*min;
-	int		has_min;
-
-	min = NULL;
-	has_min = 0;
-	head = *stack;
-	if (head)
-	{
-		while (head)
-		{
-			if ((head->index == -1) && (!has_min || head->valor < min->valor))
-			{
-				min = head;
-				has_min = 1;
-			}
-			head = head->proximo;
-		}
-	}
-	return (min);
+	if ((ft_lstsize2(*a) < 2) || (ft_lstsize2(*b) < 2))
+		return (-1);
+	rotate(a);
+	rotate(b);
+	ft_putendl_fd("rr", 1);
+	return (0);
 }
 
-void	indexar(t_pilha **stack)
+int	reverserotate(t_liste **stack)
 {
-	t_pilha	*head;
-	int		index;
+	t_liste	*head;
+	t_liste	*tail;
 
-	index = 0;
-	head = get_next_min(stack);
+	if (ft_lstsize2(*stack) < 2)
+		return (-1);
+	head = *stack;
+	tail = ft_lstlast2(head);
 	while (head)
 	{
-		head->index = index++;
-		head = get_next_min(stack);
-	}
-}
-
-void	rra(t_pilha **a)
-{
-	int			num;
-	t_pilha		*aux;
-	t_pilha		*anterior;
-
-	aux = *a;
-	anterior = NULL;
-	if (aux && aux->proximo)
-	{
-		while (aux->proximo)
+		if (head->next->next == NULL)
 		{
-			anterior = aux;
-			aux = aux->proximo;
+			head->next = NULL;
+			break ;
 		}
-		num = aux->valor;
-		inserir_inicio(&*a, num, num);
-		anterior->proximo = NULL;
-		free(aux);
-		write(1, "rra\n", 4);
+		head = head->next;
 	}
+	tail->next = *stack;
+	*stack = tail;
+	return (0);
 }
 
-void	rrb(t_pilha **b)
+int	rra(t_liste **a)
 {
-	int			num;
-	t_pilha		*aux;
-	t_pilha		*anterior;
-
-	aux = *b;
-	anterior = NULL;
-	if (aux && aux->proximo)
-	{
-		while (aux->proximo)
-		{
-			anterior = aux;
-			aux = aux->proximo;
-		}
-		num = aux->valor;
-		inserir_inicio(&*b, num, num);
-		anterior->proximo = NULL;
-		free(aux);
-		write(1, "rrb\n", 4);
-	}
+	if (reverserotate(a) == -1)
+		return (-1);
+	ft_putendl_fd("rra", 1);
+	return (0);
 }
 
-void	rrr(t_pilha **a, t_pilha **b)
+int	rrb(t_liste **b)
 {
-	rra1(&*a);
-	rrb1(&*b);
-	write(1, "rrr\n", 4);
+	if (reverserotate(b) == -1)
+		return (-1);
+	ft_putendl_fd("rrb", 1);
+	return (0);
+}
+
+int	rrr(t_liste **a, t_liste **b)
+{
+	if ((ft_lstsize2(*a) < 2) || (ft_lstsize2(*b) < 2))
+		return (-1);
+	reverserotate(a);
+	reverserotate(b);
+	ft_putendl_fd("rrr", 1);
+	return (0);
 }

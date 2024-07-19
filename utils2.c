@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-void	vra(int maior_valor, t_pilha **a)
+void	vra(int maior_valor, t_liste **a)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 	int			posicao;
 
 	aux = *a;
@@ -24,7 +24,7 @@ void	vra(int maior_valor, t_pilha **a)
 		if (aux->valor == maior_valor)
 			break ;
 		posicao++;
-		aux = aux->proximo;
+		aux = aux->next;
 	}
 	if (posicao == 1)
 		ra(&*a);
@@ -98,11 +98,11 @@ int	verificador2(char *str, int a)
 	return (v);
 }
 
-int	*push(t_pilha **a)
+int	*push2(t_liste **a)
 {
 	int			i;
 	int			*lista;
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	i = quatia(a);
 	lista = malloc(i * sizeof(int *));
@@ -111,7 +111,7 @@ int	*push(t_pilha **a)
 	while (aux)
 	{
 		lista[i] = aux->valor;
-		aux = aux->proximo;
+		aux = aux->next;
 		i++;
 	}
 	lista[i] = '\0';

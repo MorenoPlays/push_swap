@@ -12,18 +12,18 @@
 
 #include "push_swap.h"
 
-int	ordenado(t_pilha **a)
+int	ordenado(t_liste **a)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	aux = *a;
 	while (aux)
 	{
-		if (aux->proximo)
+		if (aux->next)
 		{
-			if (aux->valor < aux->proximo->valor)
+			if (aux->valor < aux->next->valor)
 			{
-				aux = aux->proximo;
+				aux = aux->next;
 			}
 			else
 			{
@@ -31,24 +31,24 @@ int	ordenado(t_pilha **a)
 			}
 		}
 		else
-			aux = aux->proximo;
+			aux = aux->next;
 	}
 	return (1);
 }
 
-int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
+int	ordenar_a(t_liste **a, t_liste **b, int index, int posicao)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	aux = *a;
-	while (aux && aux->proximo)
+	while (aux && aux->next)
 	{
-		if ((aux->valor > aux->proximo->valor) && posicao == 1)
+		if ((aux->valor > aux->next->valor) && posicao == 1)
 		{
 			sa(&*a);
 			aux = *a;
 		}
-		else if ((aux->valor > aux->proximo->valor) && posicao != 1)
+		else if ((aux->valor > aux->next->valor) && posicao != 1)
 		{
 			pb(&*a, &*b);
 			ordenar_ab(&*a, &*b);
@@ -58,26 +58,26 @@ int	ordenar_a(t_pilha **a, t_pilha **b, int index, int posicao)
 		}
 		else
 		{
-			aux = aux->proximo;
+			aux = aux->next;
 			posicao++;
 		}
 	}
 	return (index);
 }
 
-int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
+int	ordenar_b(t_liste **a, t_liste **b, int index, int posicao)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	aux = *b;
-	while (aux && aux->proximo)
+	while (aux && aux->next)
 	{
-		if (aux->valor < aux->proximo->valor && posicao == 1)
+		if (aux->valor < aux->next->valor && posicao == 1)
 		{
 			sb(&*b);
 			aux = *b;
 		}
-		else if (aux->valor > aux->proximo->valor)
+		else if (aux->valor > aux->next->valor)
 		{
 			pa(&*a, &*b);
 			ordenar_ab(&*a, &*b);
@@ -87,14 +87,14 @@ int	ordenar_b(t_pilha **a, t_pilha **b, int index, int posicao)
 		}
 		else
 		{
-			aux = aux->proximo;
+			aux = aux->next;
 			posicao++;
 		}
 	}
 	return (index);
 }
 
-void	push_swap(t_pilha **a, t_pilha **b, int index)
+void	push_swap(t_liste **a, t_liste **b, int index)
 {
 	if (quatia(&*a) < 6)
 	{
@@ -115,8 +115,8 @@ void	push_swap(t_pilha **a, t_pilha **b, int index)
 
 int	main(int argc, char *argv[])
 {
-	t_pilha		*a;
-	t_pilha		*b;
+	t_liste		*a;
+	t_liste		*b;
 
 	a = NULL;
 	b = NULL;

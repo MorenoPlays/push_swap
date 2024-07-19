@@ -12,102 +12,77 @@
 
 #include "push_swap.h"
 
-void	sa(t_pilha **a)
+int	swap(t_liste **stack)
 {
-	t_pilha		*aux;
-	int			num;
+	t_liste	*head;
+	t_liste	*next;
+	int		tmp_val;
+	int		tmp_index;
 
-	aux = *a;
-	if (aux && aux->proximo)
-	{
-		if (aux->valor > aux->proximo->valor)
-		{
-			num = aux->valor;
-			aux->valor = aux->proximo->valor;
-			aux->proximo->valor = num;
-			write(1, "sa\n", 3);
-		}
-	}
+	if (ft_lstsize2(*stack) < 2)
+		return (-1);
+	head = *stack;
+	next = head->next;
+	if (!head && !next)
+		exit(-1);
+	tmp_val = head->valor;
+	tmp_index = head->index;
+	head->valor = next->valor;
+	head->index = next->index;
+	next->valor = tmp_val;
+	next->index = tmp_index;
+	return (0);
 }
 
-void	sb(t_pilha **b)
+int	sa(t_liste **a)
 {
-	t_pilha		*aux;
-	int			num;
-
-	aux = *b;
-	if (aux && aux->proximo)
-	{
-		num = aux->valor;
-		aux->valor = aux->proximo->valor;
-		aux->proximo->valor = num;
-		write(1, "sb\n", 3);
-	}
+	if (swap(a) == -1)
+		return (-1);
+	ft_putendl_fd("sa", 1);
+	return (0);
 }
 
-void	ss(t_pilha **a, t_pilha **b)
+int	sb(t_liste **b)
 {
-	t_pilha		*aux;
-	int			num;
-
-	aux = *a;
-	if (aux && aux->proximo)
-	{
-		if (aux->valor > aux->proximo->valor)
-		{
-			num = aux->valor;
-			aux->valor = aux->proximo->valor;
-			aux->proximo->valor = num;
-		}
-	}
-	aux = *b;
-	if (aux && aux->proximo)
-	{
-		num = aux->valor;
-		aux->valor = aux->proximo->valor;
-		aux->proximo->valor = num;
-	}
-	write(1, "ss\n", 3);
+	if (swap(b) == -1)
+		return (-1);
+	ft_putendl_fd("sb", 1);
+	return (0);
 }
 
-void	pb(t_pilha **a, t_pilha **b)
-{
-	t_pilha		*aux;
-	t_pilha		*anterior;
-	int			num;
-	int			mod;
-
-	aux = *a;
-	if (aux)
-	{
-		num = aux->valor;
-		mod = aux->mod;
-		anterior = aux;
-		inserir_inicio(&*b, num, mod);
-		aux = aux->proximo;
-		(*a) = aux;
-		free(anterior);
-		write(1, "pb\n", 3);
-	}
+int	ss(t_liste **a, t_liste **b)
+{	
+	if ((ft_lstsize2(*a) < 2) || (ft_lstsize2(*b) < 2))
+		return (-1);
+	swap(a);
+	swap(b);
+	ft_putendl_fd("ss", 1);
+	return (0);
 }
 
-void	pa(t_pilha **a, t_pilha **b)
+int	push(t_liste **stack_to, t_liste **stack_from)
 {
-	t_pilha		*aux;
-	t_pilha		*anterior;
-	int			num;
-	int			mod;
+	t_liste	*tmp;
+	t_liste	*head_to;
+	t_liste	*head_from;
 
-	aux = *b;
-	if (aux)
+	if (ft_lstsize2(*stack_from) == 0)
+		return (-1);
+	head_to = *stack_to;
+	head_from = *stack_from;
+	tmp = head_from;
+	head_from = head_from->next;
+	*stack_from = head_from;
+	if (!head_to)
 	{
-		num = aux->valor;
-		mod = aux->mod;
-		anterior = aux;
-		inserir_inicio(&*a, num, mod * 10);
-		aux = aux->proximo;
-		(*b) = aux;
-		free(anterior);
-		write(1, "pa\n", 3);
+		head_to = tmp;
+		head_to->next = NULL;
+		*stack_to = head_to;
 	}
+	else
+	{
+		tmp->next = head_to;
+		*stack_to = tmp;
+	}
+	return (0);
 }

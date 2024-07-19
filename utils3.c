@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	insercao(t_pilha *a, t_pilha *b, char **argv)
+void	insercao(t_liste *a, t_liste *b, char **argv)
 {
 	int			i;
 	int			index;
@@ -33,13 +33,14 @@ void	insercao(t_pilha *a, t_pilha *b, char **argv)
 		index += inserir_no_fim(&a, valor);
 		i++;
 	}
+	index_stack(&a);
 	if (ordenado(&a) == 0)
 		push_swap(&a, &b, index);
 	ft_remove_list(&a);
 	ft_remove_list(&b);
 }
 
-void	insercao2(t_pilha *a, t_pilha *b, char **argv)
+void	insercao2(t_liste *a, t_liste *b, char **argv)
 {
 	int			i;
 	int			index;
@@ -55,16 +56,15 @@ void	insercao2(t_pilha *a, t_pilha *b, char **argv)
 			ft_putstr_fd("Error\n", 2);
 			ft_remove_list(&a);
 			ft_remove_list(&b);
-			ft_remove_matriz(argv);
 			exit(1);
 		}
 		index += inserir_no_fim(&a, valor);
 		i++;
 	}
+	index_stack(&a);
 	push_swap(&a, &b, index);
 	ft_remove_list(&a);
 	ft_remove_list(&b);
-	ft_remove_matriz(argv);
 }
 
 int	number_replace(char *str, int v)
@@ -96,10 +96,10 @@ int	number_replace(char *str, int v)
 	return (v);
 }
 
-int	quatia(t_pilha **a)
+int	quatia(t_liste **a)
 {
 	int			num;
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	aux = *a;
 	num = 0;
@@ -108,30 +108,30 @@ int	quatia(t_pilha **a)
 		while (aux)
 		{
 			num++;
-			aux = aux->proximo;
+			aux = aux->next;
 		}
 	}
 	return (num);
 }
 
-void	ordenar_ab(t_pilha **a, t_pilha **b)
+void	ordenar_ab(t_liste **a, t_liste **b)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 	int			i;
 	int			j;
 
 	aux = *a;
 	i = 0;
 	j = 0;
-	if (aux && aux->proximo)
+	if (aux && aux->next)
 	{
-		if ((aux->valor > aux->proximo->valor))
+		if ((aux->valor > aux->next->valor))
 			i = 1;
 	}
 	aux = *b;
-	if (aux && aux->proximo)
+	if (aux && aux->next)
 	{
-		if (aux->valor < aux->proximo->valor)
+		if (aux->valor < aux->next->valor)
 			j = 1;
 	}
 	if (j == 1 && i == 1)

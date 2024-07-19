@@ -12,40 +12,41 @@
 
 #include "push_swap.h"
 
-void	inserir_inicio(t_pilha **lista, int valor, int mod)
+void	inserir_inicio(t_liste **lista, int valor)
 {
-	t_pilha		*novo;
+	t_liste		*novo;
 
-	novo = malloc(sizeof(t_pilha));
+	novo = malloc(sizeof(t_liste));
 	if (novo)
 	{
 		novo->valor = valor;
-		novo->mod = mod;
-		novo->proximo = *lista;
+		novo->index = -1;
+		novo->next = *lista;
 		*lista = novo;
 	}
 }
 
-int	inserir_no_fim(t_pilha **lista, int valor)
+int	inserir_no_fim(t_liste **lista, int valor)
 {
 	int			index;
-	t_pilha		*novo;
-	t_pilha		*aux;
+	t_liste		*novo;
+	t_liste		*aux;
 
 	index = 0;
-	novo = malloc(sizeof(t_pilha));
+	novo = malloc(sizeof(t_liste));
 	if (novo)
 	{
 		novo->valor = valor;
-		novo->proximo = NULL;
+		novo->index = -1;
+		novo->next = NULL;
 		if (*lista == NULL)
 			*lista = novo;
 		else
 		{
 			aux = *lista;
-			while (aux->proximo != NULL)
-				aux = aux->proximo;
-			aux->proximo = novo;
+			while (aux->next != NULL)
+				aux = aux->next;
+			aux->next = novo;
 		}
 		index++;
 	}
@@ -54,10 +55,10 @@ int	inserir_no_fim(t_pilha **lista, int valor)
 	return (index);
 }
 
-int	menor_valor(t_pilha *head)
+int	menor_valor(t_liste *head)
 {
 	int			min;
-	t_pilha		*temp;
+	t_liste		*temp;
 
 	min = INT_MAX;
 	temp = head;
@@ -67,15 +68,15 @@ int	menor_valor(t_pilha *head)
 		{
 			min = temp->valor;
 		}
-		temp = temp->proximo;
+		temp = temp->next;
 	}
 	return (min);
 }
 
-int	maior_valor(t_pilha *head)
+int	maior_valor(t_liste *head)
 {
 	int			max;
-	t_pilha		*temp;
+	t_liste		*temp;
 
 	max = INT_MIN;
 	temp = head;
@@ -85,14 +86,14 @@ int	maior_valor(t_pilha *head)
 		{
 			max = temp->valor;
 		}
-		temp = temp->proximo;
+		temp = temp->next;
 	}
 	return (max);
 }
 
-void	vrra(int min_valor, t_pilha **a)
+void	vrra(int min_valor, t_liste **a)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 	int			valor;
 
 	valor = 0;
@@ -100,7 +101,7 @@ void	vrra(int min_valor, t_pilha **a)
 	while (aux)
 	{
 		valor = aux->valor;
-		aux = aux->proximo;
+		aux = aux->next;
 	}
 	if (valor == min_valor)
 	{

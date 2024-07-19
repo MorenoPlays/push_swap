@@ -3,107 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   radix.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eda-mata <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 12:09:29 by eda-mata          #+#    #+#             */
-/*   Updated: 2024/07/15 12:29:19 by eda-mata         ###   ########.fr       */
+/*   Created: 2021/07/09 18:33:22 by shovsepy          #+#    #+#             */
+/*   Updated: 2021/07/09 18:33:23 by shovsepy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_sort_int_tab(int *tab, int size)
+static int	get_max_bits(t_liste **stack)
 {
-	int	var1;
-	int	var2;
-	int	var3;
+	t_liste	*head;
+	int		max;
+	int		max_bits;
 
-	var1 = 1;
-	while (var1 < size)
+	head = *stack;
+	max = head->index;
+	max_bits = 0;
+	while (head)
 	{
-		var2 = 0;
-		while (var2 < (size - 1))
-		{
-			if (tab[var2] > tab[var2 + 1])
-			{
-				var3 = tab[var2];
-				tab[var2] = tab[var2 + 1];
-				tab[var2 + 1] = var3;
-			}
-			var2++;
-		}
-		var1++;
+		if (head->index > max)
+			max = head->index;
+		head = head->next;
 	}
+	while ((max >> max_bits) != 0)
+		max_bits++;
+	return (max_bits);
 }
 
-int	find(t_pilha **a, int valor)
+int	ft_lstsize2(t_liste *lst)
 {
 	int		i;
-	int		j;
-	t_pilha	*aux;
+	t_liste	*str;
 
-	i = quatia(a) / 2;
-	j = 0;
-	aux = *a;
-	while (aux)
-	{
-		if (aux->valor == valor)
-			break ;
-		j++;
-		aux = aux->proximo;
-	}
-	if (j > i)
-		return (1);
-	return (0);
-}
-
-void	radix1(t_pilha **a, t_pilha **b, int valor)
-{
-	t_pilha		*aux;
-
-	aux = *a;
-	while (aux->valor != valor)
-	{
-		rra(&*a);
-		aux = *a;
-	}
-	pb(&*a, &*b);
-}
-
-void	radix2(t_pilha **a, t_pilha **b, int valor)
-{
-	t_pilha	*aux;
-
-	aux = *a;
-	while (aux->valor != valor)
-	{
-		ra(&*a);
-		aux = *a;
-	}
-	pb(&*a, &*b);
-}
-
-void	radix(t_pilha **a, t_pilha **b)
-{
-	int			*lista;
-	int			i;
-
-	lista = push(&*a);
-	ft_sort_int_tab(lista, quatia(a));
 	i = 0;
-	while (lista[i] != '\0')
-	{	
-		if (lista[i] == (*a)->valor)
-		{
-			pb(&*a, &*b);
-			i++;
-		}
-		else if (find(&*a, lista[i]) == 1)
-			radix1(&*a, &*b, lista[i++]);
-		else
-			radix2(&*a, &*b, lista[i++]);
+	str = (t_liste *)lst;
+	while (str)
+	{
+		i++;
+		str = str->next;
 	}
-	while ((*b))
-		pa(&*a, &*b);
-	free(lista);
+	return (i);
+}
+
+void	radix(t_liste **stack_a, t_liste **stack_b)
+{
+	t_liste	*head_a;
+	int		i;
+	int		j;
+	int		size;
+	int		max_bits;
+
+	i = 0;
+	head_a = *stack_a;
+	size = ft_lstsize2(head_a);
+	max_bits = get_max_bits(&*stack_a);
+	while (i < max_bits)
+	{
+		j = 0;
+		while (j++ < size)
+		{
+			head_a = *stack_a;
+			if (((head_a->index >> i) & 1) == 1)
+				ra(stack_a);
+			else
+				pb(stack_a, stack_b);
+		}
+		while (ft_lstsize2(*stack_b) != 0)
+			pa(stack_a, stack_b);
+		i++;
+	}
 }

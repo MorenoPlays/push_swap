@@ -12,53 +12,53 @@
 
 #include "push_swap.h"
 
-void	rra1(t_pilha **a)
+void	rra1(t_liste **a)
 {
 	int			num;
-	t_pilha		*aux;
-	t_pilha		*anterior;
+	t_liste		*aux;
+	t_liste		*anterior;
 
 	aux = *a;
 	anterior = NULL;
-	if (aux && aux->proximo)
+	if (aux && aux->next)
 	{
-		while (aux->proximo)
+		while (aux->next)
 		{
 			anterior = aux;
-			aux = aux->proximo;
+			aux = aux->next;
 		}
 		num = aux->valor;
-		inserir_inicio(&*a, num, num);
-		anterior->proximo = NULL;
+		inserir_inicio(&*a, num);
+		anterior->next = NULL;
 		free(aux);
 	}
 }
 
-void	rrb1(t_pilha **b)
+void	rrb1(t_liste **b)
 {
 	int			num;
-	t_pilha		*aux;
-	t_pilha		*anterior;
+	t_liste		*aux;
+	t_liste		*anterior;
 
 	aux = *b;
 	anterior = NULL;
-	if (aux && aux->proximo)
+	if (aux && aux->next)
 	{
-		while (aux->proximo)
+		while (aux->next)
 		{
 			anterior = aux;
-			aux = aux->proximo;
+			aux = aux->next;
 		}
 		num = aux->valor;
-		inserir_inicio(&*b, num, num);
-		anterior->proximo = NULL;
+		inserir_inicio(&*b, num);
+		anterior->next = NULL;
 		free(aux);
 	}
 }
 
-void	vrrr(int menor_de_a, int maior_de_b, t_pilha **a, t_pilha **b)
+void	vrrr(int menor_de_a, int maior_de_b, t_liste **a, t_liste **b)
 {
-	t_pilha	*aux;
+	t_liste	*aux;
 	int		va;
 	int		vb;
 
@@ -67,27 +67,27 @@ void	vrrr(int menor_de_a, int maior_de_b, t_pilha **a, t_pilha **b)
 	aux = *a;
 	if (!(*a) || !(*b))
 		return ;
-	while (aux->proximo)
-		aux = aux->proximo;
+	while (aux->next)
+		aux = aux->next;
 	if (aux->valor == menor_de_a)
 		va = 1;
 	aux = *b;
-	while (aux->proximo)
-		aux = aux->proximo;
+	while (aux->next)
+		aux = aux->next;
 	if (aux->valor == maior_de_b)
 		vb = 1;
 	if (vb == 1 && va == 1)
 		rrr(&*a, &*b);
 }
 
-void	ft_remove_list(t_pilha **a)
+void	ft_remove_list(t_liste **a)
 {
-	t_pilha		*aux;
+	t_liste		*aux;
 
 	aux = *a;
 	while (aux)
 	{
-		*a = aux->proximo;
+		*a = aux->next;
 		free(aux);
 		aux = *a;
 	}

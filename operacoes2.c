@@ -12,56 +12,49 @@
 
 #include "push_swap.h"
 
-void	ra(t_pilha **a)
+int	pa(t_liste **a, t_liste **b)
 {
-	t_pilha		*aux;
-	int			num;
-
-	aux = *a;
-	if (aux)
-	{
-		num = aux->valor;
-		inserir_no_fim(&*a, num);
-		(*a) = (*a)->proximo;
-		free(aux);
-		write(1, "ra\n", 3);
-	}
+	if (push(a, b) == -1)
+		return (-1);
+	ft_putendl_fd("pa", 1);
+	return (0);
 }
 
-void	rb(t_pilha **b)
+int	pb(t_liste **a, t_liste **b)
 {
-	t_pilha		*aux;
-	t_pilha		*anterior;
-	int			num;
-
-	aux = *b;
-	if (aux)
-	{
-		num = aux->valor;
-		anterior = aux;
-		inserir_no_fim(&*b, num);
-		aux = aux->proximo;
-		(*b) = aux;
-		free(anterior);
-		write(1, "rb\n", 3);
-	}
+	if (push(b, a) == -1)
+		return (-1);
+	ft_putendl_fd("pb", 1);
+	return (0);
 }
 
-void	rr(t_pilha **a, t_pilha **b)
+int	rotate(t_liste **stack)
 {
-	ra(&*a);
-	rb(&*b);
+	t_liste	*head;
+	t_liste	*tail;
+
+	if (ft_lstsize2(*stack) < 2)
+		return (-1);
+	head = *stack;
+	tail = ft_lstlast2(head);
+	*stack = head->next;
+	head->next = NULL;
+	tail->next = head;
+	return (0);
 }
 
-void	ft_remove_matriz(char **a)
+int	ra(t_liste **a)
 {
-	int	i;
+	if (rotate(a) == -1)
+		return (-1);
+	ft_putendl_fd("ra", 1);
+	return (0);
+}
 
-	i = 0;
-	while (a[i] != (void *)0)
-	{
-		free(a[i]);
-		i++;
-	}
-	free(a);
+int	rb(t_liste **b)
+{
+	if (rotate(b) == -1)
+		return (-1);
+	ft_putendl_fd("rb", 1);
+	return (0);
 }

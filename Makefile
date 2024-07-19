@@ -12,7 +12,7 @@
 
 NAME = push_swap
 
-SRCS = push_swap.c utils2.c utils.c operacoes1.c operacoes3.c utils3.c operacoes2.c utils4.c radix.c
+SRCS = push_swap.c utils2.c utils.c operacoes1.c operacoes2.c operacoes3.c utils3.c utils4.c radix.c simple.c
 
 OBJS = $(SRCS:.c=.o)
 
